@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Extract Issue Form Parameters
         id: parse_form
-        uses: onmax/issue-form-parser@v1.5
+        uses: onmax/issue-form-parser@v1.6
         with:
           issue_number: ${{ github.event.issue.number }}
       - name: Log input parameters
