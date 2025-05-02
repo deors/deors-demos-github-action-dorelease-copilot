@@ -1,6 +1,9 @@
 # Dependency directory
 node_modules
 
+# dist directory
+dist
+
 # Rest pulled from https://github.com/github/gitignore/blob/master/Node.gitignore
 # Logs
 logs
@@ -23,6 +26,7 @@ pids
 lib-cov
 
 # Coverage directory used by tools like istanbul
+badges
 coverage
 *.lcov
 
