@@ -1,16 +1,16 @@
 {
-  "name": "workshop-action-dorelease-copilot",
+  "name": "action-dorelease-copilot",
   "description": "A GitHub Action to perform releases with an IssueOps/ChatOps approach coded live with the help of GitHub Copilot",
   "version": "0.0.0",
   "author": "",
   "private": true,
-  "homepage": "https://github.com/deors/workshop-action-dorelease-copilot",
+  "homepage": "https://github.com/deors/workshop-github-action-copilot",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/deors/workshop-action-dorelease-copilot.git"
+    "url": "git+https://github.com/deors/workshop-github-action-copilot.git"
   },
   "bugs": {
-    "url": "https://github.com/deors/workshop-action-dorelease-copilot/issues"
+    "url": "https://github.com/deors/workshop-github-action-copilot/issues"
   },
   "keywords": [
     "actions",

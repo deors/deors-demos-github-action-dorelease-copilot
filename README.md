@@ -1,4 +1,4 @@
-# workshop-action-dorelease-copilot
+# workshop-github-action-copilot
 
 A GitHub Action to perform releases with an IssueOps/ChatOps approach coded live
 with the help of GitHub Copilot including prompts and step-by-step guidance.
