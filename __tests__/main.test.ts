@@ -13,13 +13,14 @@ const mockInfo = jest.fn()
 const mockError = jest.fn()
 const mockGetInput = jest.fn()
 const mockSetOutput = jest.fn()
+const mockSetFailed = jest.fn()
 
 jest.unstable_mockModule('@actions/core', () => ({
   info: mockInfo,
   error: mockError,
   getInput: mockGetInput,
   setOutput: mockSetOutput,
-  setFailed: jest.fn()
+  setFailed: mockSetFailed
 }))
 
 const { run } = await import('../src/main.js')
@@ -34,7 +35,8 @@ describe('action', () => {
 
   it('run the DoRelease action process', async () => {
     // Set the action's inputs as return values from core.getInput()
-    mockGetInput.mockImplementation((name: unknown) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    mockGetInput.mockImplementation((name: any) => {
       switch (name) {
         case 'release-version':
           return '0.0.1-test'
