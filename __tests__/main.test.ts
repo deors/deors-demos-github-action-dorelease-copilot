@@ -6,34 +6,37 @@
  * variables following the pattern `INPUT_<INPUT_NAME>`.
  */
 
-import * as core from '@actions/core'
-import * as main from '../src/main'
+import { jest, describe, beforeEach, it, expect } from '@jest/globals'
 
-// Mock the action's main function
-const runMock = jest.spyOn(main, 'run')
+// Mock @actions/core before importing main
+const mockInfo = jest.fn()
+const mockError = jest.fn()
+const mockGetInput = jest.fn()
+const mockSetOutput = jest.fn()
+const mockSetFailed = jest.fn()
+
+jest.unstable_mockModule('@actions/core', () => ({
+  info: mockInfo,
+  error: mockError,
+  getInput: mockGetInput,
+  setOutput: mockSetOutput,
+  setFailed: mockSetFailed
+}))
+
+const { run } = await import('../src/main.js')
 
 // Other utilities
 const timeRegex = /^\d{2}:\d{2}:\d{2}/
 
-// Mock the GitHub Actions core library
-let infoMock: jest.SpiedFunction<typeof core.info>
-let errorMock: jest.SpiedFunction<typeof core.error>
-let getInputMock: jest.SpiedFunction<typeof core.getInput>
-let setOutputMock: jest.SpiedFunction<typeof core.setOutput>
-
 describe('action', () => {
   beforeEach(() => {
     jest.clearAllMocks()
-
-    infoMock = jest.spyOn(core, 'info').mockImplementation()
-    errorMock = jest.spyOn(core, 'error').mockImplementation()
-    getInputMock = jest.spyOn(core, 'getInput').mockImplementation()
-    setOutputMock = jest.spyOn(core, 'setOutput').mockImplementation()
   })
 
   it('run the DoRelease action process', async () => {
     // Set the action's inputs as return values from core.getInput()
-    getInputMock.mockImplementation(name => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    mockGetInput.mockImplementation((name: any) => {
       switch (name) {
         case 'release-version':
           return '0.0.1-test'
@@ -44,30 +47,29 @@ describe('action', () => {
       }
     })
 
-    await main.run()
-    expect(runMock).toHaveReturned()
+    await run()
 
     // Verify that all of the core library functions were called correctly
-    expect(infoMock).toHaveBeenNthCalledWith(
+    expect(mockInfo).toHaveBeenNthCalledWith(
       1,
       'Requested release version: 0.0.1-test'
     )
-    expect(infoMock).toHaveBeenNthCalledWith(2, 'Target environment: unit-test')
-    expect(setOutputMock).toHaveBeenNthCalledWith(
+    expect(mockInfo).toHaveBeenNthCalledWith(2, 'Target environment: unit-test')
+    expect(mockSetOutput).toHaveBeenNthCalledWith(
       1,
       'time',
       expect.stringMatching(timeRegex)
     )
-    expect(setOutputMock).toHaveBeenNthCalledWith(
+    expect(mockSetOutput).toHaveBeenNthCalledWith(
       2,
       'release-status',
       'success'
     )
-    expect(setOutputMock).toHaveBeenNthCalledWith(
+    expect(mockSetOutput).toHaveBeenNthCalledWith(
       3,
       'target-url',
       'https://example.com'
     )
-    expect(errorMock).not.toHaveBeenCalled()
+    expect(mockError).not.toHaveBeenCalled()
   })
 })
