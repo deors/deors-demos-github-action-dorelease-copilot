@@ -30,7 +30,7 @@
     "format:write": "npx prettier --write .",
     "format:check": "npx prettier --check .",
     "lint": "npx eslint . -c ./.github/linters/.eslintrc.yml",
-    "package": "npx esbuild src/index.ts --bundle --platform=node --target=node20 --format=cjs --outfile=dist/index.js --sourcemap && node script/generate-licenses.js",
+    "package": "npx esbuild src/index.ts --bundle --platform=node --target=node20 --format=cjs --outfile=dist/index.js --sourcemap",
     "package:watch": "npm run package -- --watch",
     "test": "NODE_OPTIONS=\"--experimental-vm-modules\" npx jest",
     "all": "npm run format:write && npm run lint && npm run test && npm run package"
