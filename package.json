@@ -30,7 +30,7 @@
     "format:write": "npx prettier --write .",
     "format:check": "npx prettier --check .",
     "lint": "npx eslint . -c ./.github/linters/.eslintrc.yml",
-    "package": "npx ncc build src/index.ts -o dist --source-map --license licenses.txt",
+    "package": "npx esbuild src/index.ts --bundle --platform=node --target=node20 --format=cjs --outfile=dist/index.js --sourcemap",
     "package:watch": "npm run package -- --watch",
     "test": "NODE_OPTIONS=\"--experimental-vm-modules\" npx jest",
     "all": "npm run format:write && npm run lint && npm run test && npm run package"
@@ -88,7 +88,7 @@
     "@types/node": "^25.0.9",
     "@typescript-eslint/eslint-plugin": "^8.53.0",
     "@typescript-eslint/parser": "^8.31.1",
-    "@vercel/ncc": "^0.38.4",
+    "esbuild": "^0.27.2",
     "eslint": "^8.57.0",
     "eslint-plugin-jest": "^29.12.1",
     "eslint-plugin-jsonc": "^2.21.0",
